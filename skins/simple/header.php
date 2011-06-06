@@ -45,7 +45,7 @@ table, td {
 </style>
 </head><body>
 <pre><a href="./">Bitcoin Webskin</a>    <?php print date('r'); ?> 
-<?	if( $this->wallet_is_open ) {
+<?php	if( $this->wallet_is_open ) {
 
 		print 'Balance: <b>' . $this->info['balance'] . '</b>'
 		. '   Blocks: ' . $this->info['blocks'] 		
@@ -57,7 +57,7 @@ table, td {
 
 	} else {
 	
-		?>Not Connected to Wallet<?
+		?>Not Connected to Wallet<?php
 	
 	}
 ?></pre>

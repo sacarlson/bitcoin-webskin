@@ -10,7 +10,7 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 	public function start() {  
 		try { 
 			$this->tube = new BitcoinClient(SCHEME, USERNAME, PASSWORD, HOST, PORT, CERTIFICATE_PATH, $debug=0);
-			$this->info = $this->tube->getinfo();   // current version of bitcoin-php is already doing a getinfo() on startup, but does not save it
+			$this->info = $this->tube->getinfo();  
 			return true;
 		} catch( BitcoinClientException $e ) {
 			$this->info['error'] = 'start() Error: ' . $e->getMessage();

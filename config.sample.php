@@ -11,8 +11,9 @@ define('PASSWORD', 	'test');
 define('SCHEME',	'http');        // http  or https  
 define('HOST',     	'127.0.0.1');   
 define('PORT',     	'8332');        // Bitcoin standard port: 8332
-define('SERVER_NETWORK','Bitcoin');     // Display name of the network
 
+define('SERVER_NETWORK', 'Bitcoin');     // Display name of the network
+define('SERVER_TESTNET', true);          // Using Testnet?  true / false
 
 // Interface for bitcoin protocol:
 

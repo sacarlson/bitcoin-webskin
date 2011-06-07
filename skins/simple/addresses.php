@@ -18,7 +18,7 @@
 		. '<td class="amount">' . $x['amount'] .'</td>'
 		. '<td class="conf">' .$x['confirmations'] .'</td>'
 		. '<td class="account">' .'<a href="?a=listtransactions&account=' . urlencode($x['account']) . '">' 
-		. htmlentities($x['account']) . '</a></td></tr>'
+		. $x['account'] . '</a></td></tr>'
 		;
 
 	}

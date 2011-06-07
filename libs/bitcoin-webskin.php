@@ -4,7 +4,6 @@
 	Copyright (c) 2011 14STzHS8qjsDPtqpQgcnwWpTaSHadgEewS
 */
 
-
 if( !file_exists('config.php') ) { 
 	$msg = "Can not find Starup file 'config.php'"; 
 	include 'skins/simple/fatal.error.php'; 
@@ -13,20 +12,14 @@ if( !file_exists('config.php') ) {
 require_once 'config.php';
 
 
-/*
-set_error_handler( 'webskin_error' );
-function webskin_error($errno, $errstr, $errfile, $errline) {
-	$msg = "</pre><p>no: $errno<br />str: $errstr<br />file: $errfile<br />line $errline</p><pre>";
-	include 'skins/simple/fatal.error.php'; 
-	exit;
-}
-*/
 
 class BitcoinWebskin {
 
-	public $debug = 0;
+	public $debug = 0;		// Debug notices  1=on  0=off
 	
-	private $starttime, $wallet_is_open, $a;
+	private $wallet_is_open; // Current status of wallet connection   true/false
+	
+	private $a;	// Current action
 
 	public function __construct() {
 		$this->wallet_is_open = false;
@@ -34,7 +27,6 @@ class BitcoinWebskin {
 		$this->template( $this->get_template() );		
 	}
 
-	
 	private function get_template() {  // get template name
 
 		$this->a = $this->get_get('a', 'home');
@@ -47,7 +39,6 @@ class BitcoinWebskin {
 			
 			default: 
 				$msg = 'Unknown Action'; include 'skins/simple/fatal.error.php'; exit; break;
-	
 	
 			case 'listtransactions':
 			
@@ -360,39 +351,31 @@ class BitcoinWebskin {
 		if( $this->wallet_is_open ) { return true; }
 		
 		include_once('libs/bitcoin-interface.php');
+
 		
-	//	include_once('plugins/test.php');
-	//	$this->wallet = new WebskinTest;		
 		
-		try {
-			$this->debug("Starting Interface: bitcoin-php");
-			include_once('plugins/bitcoin-php.php');
-			$this->wallet = new BitcoinPHPcontroler;
-			$this->debug("Interface created");			
-		} catch(BitcoinClientException $e) {
-			$this->debug("ERROR: caught BitcoinClientException: " . $e->getMessage() );
-			$this->wallet_is_open = false;
-			return false;
-		} 
+		$this->debug("Starting Interface: bitcoin-php");
 		
-		try {
-			$this->debug("Starting wallet");		
-			$this->wallet->start();
-		} catch(BitcoinClientException $e) {
-			$this->debug("ERROR: caught BitcoinClientException: " . $e->getMessage() );
+		include_once('plugins/bitcoin-php.php');
+		$this->wallet = new BitcoinPHPcontroler;
+		
+		$this->debug("Interface created.  Starting wallet... ");			
+		
+		if( !$this->wallet->start() ) {
+			$this->debug("ERROR: unable to open wallet: " . @$this->info['error']);
 			$this->wallet_is_open = false;
 			return false;
 		}
-	
+		$this->wallet_is_open = true;		
+
 		$this->info = $this->wallet->info;
 		
-		$this->debug("Wallet Open");
-		$this->debug('info: Balance: '.$this->info['balance']
+		$this->info['keypoololdest_date'] = $this->readable_time( $this->info['keypoololdest'] );
+		
+		$this->debug('Wallet Open. Balance: '.$this->info['balance']
 			.'  Blocks: '.$this->info['blocks'].'  Connections: '.$this->info['connections']
 			.'  Version: '.$this->info['version'].'  Paytxfee: '.$this->info['paytxfee']);	
 		
-		$this->info['keypoololdest_date'] = $this->readable_time( $this->info['keypoololdest'] );
-		$this->wallet_is_open = true;
 		return true;
 	} // end open_wallet
 

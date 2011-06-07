@@ -79,13 +79,12 @@ class BitcoinWebskin {
 				return 'listtransactions'; break;
 				
 				
-			
 			case 'listaccounts':  
 				$this->open_wallet(); 	
 				$this->listaccounts = $this->wallet->listaccounts( 
 					(int) $this->get_get('minconf', 1) 
 				); 
-				return 'debug'; break;
+				return 'listaccounts'; break;
 				
 			case 'listreceivedbyaccount': 
 				$this->open_wallet(); 
@@ -93,14 +92,14 @@ class BitcoinWebskin {
 					(int) $this->get_get('minconf', 1),
 					(bool) $this->get_get('includeempty', 'false') 
 				); 
-				return 'debug'; break;
+				return 'listreceivedbyaccount'; break;
 	
 			case 'getaccountaddress': 
 				$this->open_wallet(); 
 				$this->getaccountaddress = $this->wallet->getaccountaddress(
 					(string) $this->get_get('account', '', $failonempty=true) 
 				); 
-				return 'debug'; break;
+				return 'getaccountaddress'; break;
 				
 			case 'getaddressesbyaccount':
 				$this->open_wallet(); 
@@ -108,14 +107,14 @@ class BitcoinWebskin {
 					(string) $this->get_get('account', '', $failonempty=true),
 					(int) $this->get_get('minconf', 1)
 				); 
-				return 'debug'; break;
+				return 'getaddressesbyaccount'; break;
 			
 			case 'getreceivedbyaccount': 
 				$this->open_wallet(); 
 				$this->getreceivedbyaccount = $this->wallet->getreceivedbyaccount(
 					(string) $this->get_get('account', '', true) 
 				); 
-				return 'debug'; break;
+				return 'getreceivedbyaccount'; break;
 				
 			case 'getbalance': 
 				$this->open_wallet(); 
@@ -123,21 +122,17 @@ class BitcoinWebskin {
 					(string) $this->get_get('account', '', true),
 					(int) $this->get_get('minconf', 1)					
 				); 
-				return 'debug'; break;
+				return 'getbalance'; break;
+
 
 			// Transactions
-			
 
-
-			
-				
-				
 			case 'gettransaction': 
 				$this->open_wallet(); 
 				$this->gettransaction = $this->wallet->gettransaction(
 					(string) $this->get_get('txid', '', true)				
 				); 
-				return 'debug'; break;			
+				return 'gettransaction'; break;			
 
 			case 'listreceivedbyaddress': 
 				$this->open_wallet(); 
@@ -145,14 +140,14 @@ class BitcoinWebskin {
 					(int)  $this->get_get('minconf', 1),
 					(bool) $this->get_get('includeempty', false) 					
 				); 
-				return 'addresses'; break;	
+				return 'listreceivedbyaddress'; break;	
 				
 			case 'getnewaddress':
 				$this->open_wallet(); 
 				$this->getnewaddress = $this->wallet->getnewaddress(
 					(string) $this->get_get('account', '')				
 				); 
-				return 'debug'; break;		
+				return 'getnewaddress'; break;		
 				
 			case 'getreceivedbyaddress': 
 				$this->open_wallet(); 			
@@ -160,14 +155,14 @@ class BitcoinWebskin {
 					(string) $this->get_get('address', ''),				
 					(int)    $this->get_get('minconf', 1)			
 				); 
-				return 'debug'; break;				
+				return 'getreceivedbyaddress'; break;				
 
 			case 'getaccount':
 				$this->open_wallet(); 			
 				$this->getaccount = $this->wallet->getaccount(
 					(string) $this->get_get('address', '', true)					
 				); 
-				return 'debug'; break;	
+				return 'getaccount'; break;	
 
 			case 'setaccount':
 				$this->open_wallet(); 			
@@ -178,14 +173,14 @@ class BitcoinWebskin {
 				if( $this->setaccount == '' ) { 
 					$this->setaccount = 'OK';
 				}
-				return 'debug'; break;	
+				return 'setaccount'; break;	
 				
 			case 'validateaddress': 
 				$this->open_wallet(); 			
 				$this->validateaddress = $this->wallet->validateaddress(
 					(string) $this->get_get('address', '', true)					
 				); 
-				return 'debug'; break;			
+				return 'validateaddress'; break;			
 				
 			case 'sendtoaddress': 
 				$this->open_wallet(); 			
@@ -195,7 +190,7 @@ class BitcoinWebskin {
 					(string) $this->get_get('comment', ''),					
 					(string) $this->get_get('comment_to', '')					
 				); 
-				return 'debug'; break;			
+				return 'sendtoaddress'; break;			
 			
 			case 'sendfrom':
 				$this->open_wallet(); 			
@@ -207,8 +202,7 @@ class BitcoinWebskin {
 					(string) $this->get_get('comment', ''),					
 					(string) $this->get_get('comment_to', '')					
 				); 
-				//print "<pre>sendfrom = "; print_r($this->sendfrom); print '|</pre>';
-				return 'debug'; break;				
+				return 'sendfrom'; break;				
 			
 			case 'sendmany': 
 				$this->open_wallet(); 			
@@ -218,7 +212,7 @@ class BitcoinWebskin {
 					(int)    $this->get_get('minconf', 1),				
 					(string) $this->get_get('comment', '')							
 				); 
-				return 'debug'; break;				
+				return 'sendmany'; break;				
 			
 			case 'move': 
 				$this->open_wallet(); 			
@@ -229,12 +223,12 @@ class BitcoinWebskin {
 					(int)    $this->get_get('minconf', 1),				
 					(string) $this->get_get('comment', '')							
 				); 
-				return 'debug'; break;				
+				return 'move'; break;				
 
 			case 'getinfo': 
 				$this->open_wallet(); 
 				$this->getinfo = @$this->info; 
-				return 'debug'; break;
+				return 'getinfo'; break;
 			
 			case 'getblockcount': 
 			case 'getblocknumber': 
@@ -265,7 +259,7 @@ class BitcoinWebskin {
 				if( $this->backupwallet == '' ) { 
 					$this->backupwallet = 'OK';
 				}				
-				return 'debug'; break;
+				return 'backupwallet'; break;
 				
 			case 'setgenerate':
 				$this->open_wallet(); 			
@@ -276,14 +270,14 @@ class BitcoinWebskin {
 				if( $this->setgenerate == '' ) {
 					$this->setgenerate = 'OK';
 				}
-				return 'debug'; break;
+				return 'setgenerate'; break;
 				
 			case 'help': 
 				$this->open_wallet(); 			
 				$this->help = $this->wallet->help(
 					(string) $this->get_get('command', '')				
 				); 
-				return 'debug'; break;
+				return 'help'; break;
 			
 			
 			// Namecoin
@@ -386,7 +380,7 @@ class BitcoinWebskin {
 			include 'skins/simple/fatal.error.php'; 
 			exit; 
 		}
-		//print "<pre style='margin:0'>template($t) loading </pre>";		
+		$this->debug("template($t) loading");		
 		try {
 			include($file);	
 		} catch( Exception $e ) {

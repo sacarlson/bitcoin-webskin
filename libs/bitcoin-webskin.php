@@ -76,7 +76,7 @@ class BitcoinWebskin {
 					array( &$this, 'post_process_listtransactions') 
 				);
 				
-				return 'transactions'; break;
+				return 'listtransactions'; break;
 				
 				
 			

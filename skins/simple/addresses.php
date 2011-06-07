@@ -13,7 +13,7 @@
  </tr>
 <?php
 
-	while( list(,$x) = each($this->listreceivedbyaddress) ) {
+	while( list(,$x) = @each($this->listreceivedbyaddress) ) {
 		print '<tr><td class="address">' . $x['address'] .'</td>'
 		. '<td class="amount">' . $x['amount'] .'</td>'
 		. '<td class="conf">' .$x['confirmations'] .'</td>'

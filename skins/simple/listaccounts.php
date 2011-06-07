@@ -4,14 +4,15 @@
 	Copyright (c) 2011 14STzHS8qjsDPtqpQgcnwWpTaSHadgEewS
 */
 ?><?php $this->template('header'); ?>
-<pre>DEBUG: <b><?php print $this->a; ?></b><hr />
-<?php 
 
+<p>List Accounts:</p>
 
-	isset( $this->{$this->a} )
-		? print_r($this->{$this->a})
-		: print "Error: DEBUG template can not find property '" . $this->a . "'";
+<table>
+ <tr><td>Account</td><td>Balance</td><?php 
+
+	while( list($name,$val) = @each($this->listaccounts) ) {
+		print "<tr><td>$name</td><td class='amount'>" . $this->num($val) . "</td></tr>";
+	}
 		
-?> 
-</pre>
+?></table>
 <?php $this->template('footer'); ?>

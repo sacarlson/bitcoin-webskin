@@ -144,13 +144,17 @@ Tests:
 
 <hr /><a name="server">Server</a>
 
-<form action="./" method="GET"><input type="hidden" name="a" value="getinfo"><input type="submit" value="getinfo"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="getblockcount"><input type="submit" value="getblockcount"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="getblocknumber"><input type="submit" value="getblocknumber"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="getconnectioncount"><input type="submit" value="getconnectioncount"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="getdifficulty"><input type="submit" value="getdifficulty"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="getgenerate"><input type="submit" value="getgenerate"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="gethashespersec"><input type="submit" value="gethashespersec"></form>	
+<p><a href="./?a=getinfo">getinfo</a></p>
+
+<p>
+<a href="./?a=getblockcount">getblockcount</a>
+<a href="./?a=getblocknumber">getblocknumber</a>
+<a href="./?a=getconnectioncount">getconnectioncount</a>
+<a href="./?a=getdifficulty">getdifficulty</a>
+<a href="./?a=getgenerate">getgenerate</a>
+<a href="./?a=gethashespersec">gethashespersec</a>
+</p>
+
 
 <form action="./" method="GET"><input type="hidden" name="a" value="getwork">
 <input type="submit" value="getwork"> 
@@ -173,7 +177,7 @@ Tests:
 	command:<input type="text" name="command" value="" size="10">
 </form>	
 
-<form action="./" method="GET"><input type="hidden" name="a" value="stop"><input type="submit" value="stop"></form>	
+<a href="./?a=stop">stop</a>
 
 
 <hr /><a name="namecoin">Namecoin</a>
@@ -209,18 +213,22 @@ Tests:
 	to address:<input type="text" name="address" value="" size="40">
 </form>	
 
-<form action="./" method="GET">
-<input type="hidden" name="a" value="name_clean"><input type="submit" value="name_clean"></form>	
+<a href="./?a=name_clean">name_clean</a>
+
 	
 <form action="./" method="GET">
 <input type="hidden" name="a" value="delete_transaction"><input type="submit" value="delete_transaction">
 	txid:<input type="text" name="txid" value="" size="68">
 </form>	
 
+
+
 <hr /><a name="webskin">Webskin</a>
-<form action="./" method="GET"><input type="hidden" name="a" value="start"><input type="submit" value="start"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="getprocess"><input type="submit" value="getprocess"></form>	
-<form action="./" method="GET"><input type="hidden" name="a" value="kill"><input type="submit" value="kill"></form>	
+
+<a href="./?a=start">start</a>
+<a href="./?a=getprocess">getprocess</a>
+<a href="./?a=kill">kill</a>
+	
 	
 	
 <p>

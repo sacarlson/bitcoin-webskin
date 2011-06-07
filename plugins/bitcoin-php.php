@@ -8,15 +8,21 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 
 	// Control
 	public function start() {  
-		$this->tube = new BitcoinClient(SCHEME, USERNAME, PASSWORD, HOST, PORT, CERTIFICATE_PATH, $debug=0);
-		$this->info = $this->tube->getinfo();
+		try { 
+			$this->tube = new BitcoinClient(SCHEME, USERNAME, PASSWORD, HOST, PORT, CERTIFICATE_PATH, $debug=0);
+			$this->info = $this->tube->getinfo();   // current version of bitcoin-php is already doing a getinfo() on startup, but does not save it
+			return true;
+		} catch( BitcoinClientException $e ) {
+			$this->info['error'] = 'start() Error: ' . $e->getMessage();
+			return false;
+		}	
 	}
 	
 	public function getprocess() {  // get info on server process
-		return 'Error: ' . $e->getMessage();
+		return 'getprocess() not implemented';
 	}
 	public function kill() {  // kill the local server process
-		return 'Error: ' . $e->getMessage();
+		return 'kill() not implemented';
 	}
 	
 	// Accounts
@@ -24,7 +30,7 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->query('listaccounts', (int)$minconf);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'listaccounts() Error: ' . $e->getMessage();
 		}
 	} // end listaccounts
 	
@@ -32,7 +38,7 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->listreceivedbyaccount( (int)$minconf, (bool)$includeempty);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'listreceivedbyaccount() Error: ' . $e->getMessage();
 		}	
 	} // end listreceivedbyaccount
 	
@@ -40,34 +46,32 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->getaccountaddress( (string)$account );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getaccountaddress() Error: ' . $e->getMessage();
 		}	
-		
-	
 	}
+
     public function getaddressesbyaccount( $account ) { 
 		try { 
 			return $this->tube->getaddressesbyaccount( (string)$account );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getaddressesbyaccount() Error: ' . $e->getMessage();
 		}
-		
 	}
+
     public function getreceivedbyaccount( $account, $minconf=1 ) { 
 		try { 
 			return $this->tube->getreceivedbyaccount( (string)$account, (int)$minconf );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getreceivedbyaccount() Error: ' . $e->getMessage();
 		}
-		
 	}
+
     public function getbalance( $account, $minconf=1 ) { 	
 		try { 
 			return $this->tube->getbalance( (string)$account, (int)$minconf );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getbalance() Error: ' . $e->getMessage();
 		}
-		
 	}
 	
 	// Transactions
@@ -75,72 +79,65 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->query('listtransactions', (string)$account, (int)$count);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'listtransactions() Error: ' . $e->getMessage();
 		}
-		
 	} 
-	
 	
 	public function gettransaction( $txid ) { 
 		try { 
 			return $this->tube->query('gettransaction', (string)$txid);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'gettransaction Error: ' . $e->getMessage();
 		}
-	} // end gettransaction
-	
+	} 
 	
 	// Addresses
 	public function listreceivedbyaddress( $minconf=1, $includeempty=false ) { 
 		try { 
 			return $this->tube->listreceivedbyaddress( (int)$minconf, (bool)$includeempty );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'listreceivedbyaddress() Error: ' . $e->getMessage();
 		}
-		
 	}
 
 	public function getnewaddress( $account='' ) { 
  		try { 
 			return $this->tube->getnewaddress( (string)$account );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getnewaddress() Error: ' . $e->getMessage();
 		}
-		
 	}
 
 	public function getreceivedbyaddress( $address, $minconf=1 ) { 
  		try { 
 			return $this->tube->getreceivedbyaddress( (string)$address, (int)$minconf );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getreceivedbyaddress() Error: ' . $e->getMessage();
 		}
-		
 	}
+
 	public function getaccount( $address ) { 
 		try { 
 			return $this->tube->getaccount( (string)$address );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getaccount() Error: ' . $e->getMessage();
 		}
-    	
-
 	}
+
 	public function setaccount( $address, $account ) { 
 		try { 
 			return $this->tube->setaccount( (string)$address, (string)$account );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'setaccount() Error: ' . $e->getMessage();
 		}
-    	
 	}
+
 	public function validateaddress( $address ) { 	
  		try { 
 			return $this->tube->validateaddress( (string)$address );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'validateaddress() Error: ' . $e->getMessage();
 		}
-		
 	}
 	
 	// Sending
@@ -148,9 +145,10 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->sendtoaddress( (string)$address, (float)$amount, (string)$comment, (string)$comment_to );
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'sendtoaddress() Error: ' . $e->getMessage();
 		}
 	}
+
 	public function sendfrom( $fromaccount, $toaddress, $amount, $minconf=1, $comment='', $comment_to='' ) { 
 		try { 
 			return $this->tube->sendfrom( 
@@ -162,11 +160,10 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 				(string)$comment_to
 			);			
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'sendfrom() Error: ' . $e->getMessage();
 		}
-
-
 	}
+
 	public function sendmany( $fromaccount, $tomany, $minconf=1, $comment='') { 
  		try { 
 			return $this->tube->sendmany( 
@@ -176,10 +173,10 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 				(string)$comment
 			);			
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'sendmany() Error: ' . $e->getMessage();
 		}
-
 	}
+	
 	public function move( $fromaccount, $toaccount, $amount, $minconf=1, $comment='' ) { 
  		try { 
 			return $this->tube->move( 
@@ -190,9 +187,8 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 				(string)$comment
 			);			
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'move() Error: ' . $e->getMessage();
 		}
-
 	}
 	
 	// Server
@@ -200,49 +196,55 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->getinfo(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getinfo() Error: ' . $e->getMessage();
 		}	
 	}
+
 	public function getblockcount() { 
 		try { 
 			return $this->tube->getblockcount(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getblockcount() Error: ' . $e->getMessage();
 		}	
 	}
+
 	public function getblocknumber() { 
 		try { 
 			return $this->tube->getblocknumber(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getblocknumber() Error: ' . $e->getMessage();
 		}
 	}
+
 	public function getconnectioncount() { 
 		try { 
 			return $this->tube->getconnectioncount(); 	
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getconnectioncount() Error: ' . $e->getMessage();
 		}
 	}
+
 	public function getdifficulty() { 
 		try { 
 			return $this->tube->getdifficulty(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getdifficulty() Error: ' . $e->getMessage();
 		}
 	}
+
 	public function getgenerate() { 
 		try { 
 			return $this->tube->getgenerate(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getgenerate() Error: ' . $e->getMessage();
 		}	
 	}
+
 	public function gethashespersec() { 
 		try { 
 			return $this->tube->gethashespersec(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'gethashespersec() Error: ' . $e->getMessage();
 		}	
 	}
 
@@ -250,14 +252,15 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->getwork( $data ); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'getwork() Error: ' . $e->getMessage();
 		}	
 	}
+
 	public function backupwallet( $destination ) { 
 		try { 
 			return $this->tube->backupwallet( (string)$destination ); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'backupwallet() Error: ' . $e->getMessage();
 		}	
 	}	
 
@@ -265,7 +268,7 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->setgenerate( (bool)$generate, (int)$genproclimit ); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'setgenerate() Error: ' . $e->getMessage();
 		}	
 	}
 
@@ -273,7 +276,7 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return htmlentities( $this->tube->help( $command ) ); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'help() Error: ' . $e->getMessage();
 		}	
 	}
 	
@@ -281,36 +284,35 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 		try { 
 			return $this->tube->stop(); 
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'stop() Error: ' . $e->getMessage();
 		}	
 	}
-
 
 	// Namecoin
     public function name_list( $name ) { 
 		try { 
 			return $this->tube->query('name_list', (string)$name);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'name_list() Error: ' . $e->getMessage();
 		}	
-		
 	}
+
     public function name_scan( $start_name='', $max_returned ) { 
 		try { 
 			return $this->tube->query('name_scan', (string)$start_name, (int)$max_returned);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'name_scan() Error: ' . $e->getMessage();
 		}
-	
 	}
+
     public function name_new( $name ) { 
 		try { 
 			return $this->tube->query('name_new', (string)$name);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'name_new() Error: ' . $e->getMessage();
 		}
-
 	}
+
     public function name_firstupdate( $name, $rand, $tx, $value ) {
 		try { 
 			return $this->tube->query('name_firstupdate', 
@@ -320,35 +322,33 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 				(string)$value
 			);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'name_firstupdate() Error: ' . $e->getMessage();
 		}
-
 	}
+
     public function name_update( $name, $value, $toaddress='' ) { 
 		try { 
 			return $this->tube->query('name_update', (string)$name, (string)$value, (string)$toaddress);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'name_update() Error: ' . $e->getMessage();
 		}
-		
 	}
+
 	public function name_clean() { 
 		try { 
 			return $this->tube->query('name_clean');
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'name_clean() Error: ' . $e->getMessage();
 		}
-		
 	}
+
     public function deletetransaction( $txid ) { 
 		try { 
 			return $this->tube->query('deletetransaction', (string)$txid);
 		} catch( BitcoinClientException $e ) {
-			return 'Error: ' . $e->getMessage();
+			return 'deletetransaction() Error: ' . $e->getMessage();
 		}
-		
 	}
-	
 	
 } // end class BitcoinPHP
 

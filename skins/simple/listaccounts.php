@@ -8,7 +8,7 @@
 <p>List Accounts:</p>
 
 <table>
- <tr><td>Account</td><td>Balance</td><?php 
+ <tr><td>Account</td><td>Balance</td></tr><?php 
 
 	while( list($name,$val) = @each($this->listaccounts) ) {
 		print "<tr><td>$name</td><td class='amount'>" . $this->num($val) . "</td></tr>";

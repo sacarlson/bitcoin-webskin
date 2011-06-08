@@ -23,6 +23,7 @@ class BitcoinWebskin {
 
 	public function __construct() {
 		$this->wallet_is_open = false;
+		//$this->skin = 'debug';
 		$this->skin = 'simple';
 		$this->template( $this->get_template() );		
 	}
@@ -332,7 +333,32 @@ class BitcoinWebskin {
 				$this->delete_transaction = $this->wallet->delete_transaction(
 					(string) $this->get_get('txid', '', true)	
 				); 
-				return 'debug'; break;					
+				return 'debug'; break;		
+
+
+			// misc
+			
+			case 'mtgox':
+			
+				include_once('plugins/mtgox.php');
+				
+				$this->info['mtgox_ticker'] = mtgox_get_ticker();
+											//= null_data_ticker();
+											
+				switch( $this->get_get('a1', '') ) {
+					case 'depth':
+						$this->info['mtgox_depth']  = mtgox_get_depth();
+												    //= null_data_depth();
+						break;
+					case 'trades':
+						$this->info['mtgox_trades'] = mtgox_get_trades();
+													//= null_data_trades();		
+						break;
+				}
+				
+				return 'mtgox';
+				break;			
+	
 				
 		} // end switch
 

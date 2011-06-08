@@ -72,7 +72,7 @@ if( isset($this->info['mtgox_trades']) ) {
 
 
 
-if( $this->a1 == 'calc' ) {
+if( $_GET['a1'] == 'calc' ) {
 
 	$mtgox_fee = 0.0065;
 
@@ -93,11 +93,11 @@ if( $this->a1 == 'calc' ) {
 	
 	?><form><input type="hidden" name="a" value="mtgox"><input type="hidden" name="a1" value="calc">Calculator:
 
- Buy <input name="buy_btc" type="text" size="4" value="<?php print $buy_btc; ?>"> BTC @ <input 
- name="sell_usd" type="text" size="4" value="<?php print $sell_usd; ?>"> USD per with <?php print ($mtgox_fee * 100); ?> % BTC fee
+ Buy <input name="buy_btc" type="text" size="6" value="<?php print $buy_btc; ?>"> BTC @ <input 
+ name="sell_usd" type="text" size="6" value="<?php print $sell_usd; ?>"> USD per with <?php print ($mtgox_fee * 100); ?> % BTC fee
 
-Sell <input name="sell_btc" type="text" size="4" value="<?php print $sell_btc?>"> BTC @ <input 
-name="buy_usd" type="text" size="4" value="<?php print $buy_usd; ?>"> USD per with <?php print ($mtgox_fee * 100); ?> % USD fee
+Sell <input name="sell_btc" type="text" size="6" value="<?php print $sell_btc?>"> BTC @ <input 
+name="buy_usd" type="text" size="6" value="<?php print $buy_usd; ?>"> USD per with <?php print ($mtgox_fee * 100); ?> % USD fee
 
 <input type="submit" value="         Calculate          "> 
 <?

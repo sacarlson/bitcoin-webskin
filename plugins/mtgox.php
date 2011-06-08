@@ -3,7 +3,7 @@
 	Bitcoin Webskin - an open source PHP web interface to bitcoind
 	Copyright (c) 2011 14STzHS8qjsDPtqpQgcnwWpTaSHadgEewS
 */
-?
+
 function mtgox_get_ticker() {
 	global $ch;
 	

@@ -72,7 +72,7 @@ if( isset($this->info['mtgox_trades']) ) {
 
 
 
-if( $_GET['a1'] == 'calc' ) {
+if( isset($_GET['a1']) && $_GET['a1'] == 'calc' ) {
 
 	$mtgox_fee = 0.0065;
 

@@ -30,4 +30,4 @@ define('SERVER',         		'C:\tmp\bitcoin\bitcoind.exe');  // full pathname to 
 define('SERVER_NAME',    		'bitcoind.exe'); // name only of bitcoind executable
 define('SERVER_TESTNET',    	true); // use testnet?  true / false
 define('SERVER_DATADIR', 		'C:\tmp\bitcoin-testnet-datadir');  // location of data dir
-define('SERVER_CONF',    		'C:\tmp\bitcoin-testnet-datadir\tenset.conf'); // location of conf file
+define('SERVER_CONF',    		'C:\tmp\bitcoin-testnet-datadir\test.conf'); // location of conf file

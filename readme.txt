@@ -44,9 +44,11 @@ Files:
 /readme.txt
 /libs/bitcoin-webskin.php
 /libs/bitcoin-interface.php
-/skins/simple/*.php
-/plugins/test.php
-/plugins/bitcoin-php.php   
+/skins/simple/*.php	- the simple html skin
+/skins/debug/*.php	- the debug skin
+/plugins/test.php	- the debug interface
+/plugins/bitcoin-php.php   - bitcoin-php library interface
+/plugins/mtgox.php - plugin to mtgox json public api
 
 ---------------------------------------------------------------------
 Making a new skin:

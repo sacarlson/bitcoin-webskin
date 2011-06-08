@@ -20,6 +20,7 @@ Tests:
 <br /><a href="./?a=listtransactions">List All Transactions</a>
 <br /><a href="./?a=getinfo">Get Info</a>
 <br /><a href="./?a=mtgox">MtGox market data</a>
+<br /><a href="./?a=server.control">Server Control</a>
 </p>
 
 <hr /><a name="accounts">Accounts</a>

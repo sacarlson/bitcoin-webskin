@@ -336,6 +336,70 @@ class BitcoinWebskin {
 				return 'debug'; break;		
 
 
+				
+			////////////////////////////////////////////////////////////////////////////////////////////////
+			case 'server.control': 
+					
+				if( !SERVER_LOCALHOST ) {
+					$this->info['control'] = 'Error: No Localhost server found in configuration';
+					return 'server.control';
+				}
+				
+				if( SERVER_LOCALHOST_TYPE != 'windows' ) {
+					$this->info['control'] = 'Erro: No Windows platform found in configuration';
+					return 'server.control';
+				}
+				switch( strtolower( $this->get_get('a1', '') ) ) {
+				
+					case 'view': 
+						// tasklist 
+						$tasklist = shell_exec(WINDOWS_TASKLIST 
+							. ' /FO LIST /FI "IMAGENAME eq ' . SERVER_NAME . '" 2>&1');
+						//$tasklist = shell_exec(WINDOWS_TASKLIST . ' 2>&1');
+						$found = strpos($tasklist, SERVER_NAME);
+						if( $found === false ) { 
+							$this->info['control'] = SERVER_NAME . ' Process Not Found';
+							return 'server.control';
+						}
+						//$header = substr($tasklist, 0, 154);
+						//$info = substr($tasklist, $found, 76);
+						//$this->info['control'] = "$header\n$info";
+						$this->info['control'] = $tasklist;
+						break;
+						
+					case 'start': 
+			
+						if( !file_exists( SERVER ) ) {
+							$this->info['control'] = "Error: Can not find server executable '" . SERVER . "'";
+							return 'server.control';
+						}
+						
+						if( !file_exists( SERVER_CONF ) ) {
+							$this->info['control'] = "ERROR: Can not find server configuration file '" 
+							. SERVER_CONF . "'<br />Please create this configuration file.";
+							return 'server.control';
+						}
+						
+						$start_cmd = 'start /B ' . SERVER 
+							. ( SERVER_TESTNET ? ' -testnet ' : '' )
+							. ' -datadir=' . SERVER_DATADIR 
+							. ' -conf=' . SERVER_CONF;
+						
+						$this->info['control'] = "Running: $start_cmd\n";
+						try {
+							//$this->info['control'] = shell_exec( $start_cmd. ' 2>&1');
+							pclose(popen("start /B ". $start_cmd, "r"));  // start in background, return execution to us
+						} catch( BitcoinClientException $e ) {
+							$this->info['control'] .= "Error: Can not start server: \nCommand: $cmd \nMessage: " 
+								. $e->getMessage();
+						}
+						break;				
+				
+				} // end switch
+				
+				return 'server.control';
+				break;
+				
 			// misc
 			
 			case 'mtgox':

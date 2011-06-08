@@ -1,14 +1,9 @@
 <?php
 /*
-	Bitcoin Webskin
-	MtGox functions
-
-	Copyright 2011 
-	
-	Version 0.0.1
+	Bitcoin Webskin - an open source PHP web interface to bitcoind
+	Copyright (c) 2011 14STzHS8qjsDPtqpQgcnwWpTaSHadgEewS
 */
-
-
+?
 function mtgox_get_ticker() {
 	global $ch;
 	

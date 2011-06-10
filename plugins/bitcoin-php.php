@@ -166,7 +166,7 @@ class BitcoinPHPcontroler implements Bitcoin, Namecoin {
 
 	public function sendmany( $fromaccount, $tomany, $minconf=1, $comment='') { 
  		try { 
-			return $this->tube->sendmany( 
+			return $this->tube->query('sendmany',  
 				(string)$fromaccount,
 				(string)$tomany,
 				(int)$minconf,

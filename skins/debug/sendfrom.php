@@ -4,13 +4,13 @@
 	Copyright (c) 2011 14STzHS8qjsDPtqpQgcnwWpTaSHadgEewS
 */
 ?><?php $this->template('header'); ?>
-<pre><b>getaddressesbyaccount</b><hr />
+<pre><b>sendfrom</b><hr />
 <?php 
 
 
-	isset( $this->getaddressesbyaccount )
-		? print_r($this->getaddressesbyaccount)
-		: print "Error: getaddressesbyaccount not set";
+	isset( $this->sendfrom )
+		? print_r($this->sendfrom)
+		: print "Error: sendfrom not set";
 		
 ?> 
 </pre>

@@ -38,17 +38,17 @@ Tests:
 	
 <form action="./" method="GET"><input type="hidden" name="a" value="getaccountaddress">
 <input type="submit" value="getaccountaddress"> 
-	account:<input type="text" name="account" value='""' size="20">
+	account:<input type="text" name="account" value='test' size="20">
 </form>	
 
 <form action="./" method="GET"><input type="hidden" name="a" value="getaddressesbyaccount">
 <input type="submit" value="getaddressesbyaccount"> 
-	account:<input type="text" name="account" value='""' size="20">
+	account:<input type="text" name="account" value='test' size="20">
 </form>	
 
 <form action="./" method="GET"><input type="hidden" name="a" value="getreceivedbyaccount">
 <input type="submit" value="getreceivedbyaccount"> 
-	account:<input type="text" name="account" value='""' size="20">
+	account:<input type="text" name="account" value='test' size="20">
 	minconf:<input type="text" name="minconf" value="1" size="3">
 </form>	
 
@@ -219,7 +219,7 @@ Tests:
 
 	
 <form action="./" method="GET">
-<input type="hidden" name="a" value="delete_transaction"><input type="submit" value="delete_transaction">
+<input type="hidden" name="a" value="deletetransaction"><input type="submit" value="deletetransaction">
 	txid:<input type="text" name="txid" value="" size="68">
 </form>	
 

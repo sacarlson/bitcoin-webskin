@@ -23,8 +23,8 @@ class BitcoinWebskin {
 
 	public function __construct() {
 		$this->wallet_is_open = false;
-		//$this->skin = 'debug';
-		$this->skin = 'simple';
+		$this->skin = 'debug';
+		//$this->skin = 'simple';
 		$this->template( $this->get_template() );		
 	}
 
@@ -308,10 +308,10 @@ class BitcoinWebskin {
 				
 			case 'name_update':
 				$this->open_wallet(); 			
-				$this->name_firstupdate = $this->wallet->name_firstupdate(
+				$this->name_update = $this->wallet->name_update(
 					(string) $this->get_get('name', ''),															
 					(string) $this->get_get('value', ''),
-					(string) $this->get_get('address', '', true)										
+					(string) $this->get_get('address', '')										
 				); 
 				return 'debug'; break;
 				
@@ -328,9 +328,9 @@ class BitcoinWebskin {
 				$this->name_clean = $this->wallet->name_clean(); 
 				return 'debug'; break;						
 				
-			case 'delete_transaction':
+			case 'deletetransaction':
 				$this->open_wallet(); 			
-				$this->delete_transaction = $this->wallet->delete_transaction(
+				$this->deletetransaction = $this->wallet->deletetransaction(
 					(string) $this->get_get('txid', '', true)	
 				); 
 				return 'debug'; break;		

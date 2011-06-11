@@ -21,8 +21,7 @@
  <tr>
   <td>Category</td>
   <td>Amount</td>
-  <td>Confs</td>
-  <!-- <td>Status</td> -->
+  <td>Confirmations</td>
   <td><a href="?a=listaccounts">Account</a></td>  
   <td>Time</td>
   <td><a href="?a=listreceivedbyaddress">Address</a></td>
@@ -37,8 +36,8 @@
 			print '<tr>'
 			. '<td>' .@$x['category'] . '</td>'
 			. '<td class="amount">' .$x['amount'] . '</td>'
-			. '<td class="conf">' . (isset($x['confirmations']) ? $x['confirmations'] : '-') . '</td>'
-			//. '<td>' . $x['status'] . '</td>'
+			//. '<td class="conf">' . (isset($x['confirmations']) ? $x['confirmations'] : '-') . '</td>'
+			. '<td class="conf">' . $x['status'] . '</td>'
 			. '<td><a href="./?a=listtransactions&account=' 
 				. urlencode($x['account']) . '">' . $x['account'] . '</a></td>'
 			. '<td>' . $x['datetime'] . '</td>'

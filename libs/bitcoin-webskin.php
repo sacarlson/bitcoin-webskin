@@ -482,6 +482,10 @@ class BitcoinWebskin {
 	private function post_process_listtransactions(&$item, $key) {
 	
 		$item['datetime'] = date('r', $item['time']);
+	
+		if( isset($item['amount']) ) {
+			$item['amount'] = $this->num($item['amount']);
+		}
 		
 		if( isset($item['txid']) ) {
 			$item['txid_short'] = substr( $item['txid'], 0, 10) . '...'; 
@@ -492,29 +496,35 @@ class BitcoinWebskin {
 		}
 		
 		if( isset($item['confirmations']) && $item['confirmations'] >= 6 ) { 
-			$item['status'] = 'confirmed';
+			$item['status'] = 'Confirmed /' . $item['confirmations'];
 		} else { 
-			$item['status'] = 'unconfirmed';
+			$item['status'] = 'unconfirmed /' . $item['confirmations'];
 		}
-		if( $item['category'] == 'move' ) { $item['status'] = 'move'; }  // moves have no confirmations
+		if( $item['category'] == 'move'
+			|| $item['category'] == 'immature'
+			|| $item['category'] == 'orphan'
+			|| $item['category'] == 'generate'
+		) { 
+			$item['status'] = $item['confirmations'];
+		}  
 		
 					
 		isset($this->info['immature_count']) ? : $this->info['immature_count'] = 0;
-		isset($this->info['immature_amount']) ? : $this->info['immature_amount'] = 0;
+		isset($this->info['immature_amount']) ? : $this->info['immature_amount'] = '0.00000000';
 		isset($this->info['generate_count']) ? : $this->info['generate_count'] = 0;
-		isset($this->info['generate_amount']) ? : $this->info['generate_amount'] = 0;
+		isset($this->info['generate_amount']) ? : $this->info['generate_amount'] = '0.00000000';
 		isset($this->info['orphan_count']) ? : $this->info['orphan_count'] = 0;
-		isset($this->info['orphan_amount']) ? : $this->info['orphan_amount'] = 0;
+		isset($this->info['orphan_amount']) ? : $this->info['orphan_amount'] = '0.00000000';
 		isset($this->info['move_count']) ? : $this->info['move_count'] = 0;
-		isset($this->info['move_amount']) ? : $this->info['move_amount'] = 0;
+		isset($this->info['move_amount']) ? : $this->info['move_amount'] = '0.00000000';
 		isset($this->info['receive_count']) ? : $this->info['receive_count'] = 0;
-		isset($this->info['receive_amount']) ? : $this->info['receive_amount'] = 0;
+		isset($this->info['receive_amount']) ? : $this->info['receive_amount'] = '0.00000000';
 		isset($this->info['send_count']) ? : $this->info['send_count'] = 0;
-		isset($this->info['send_amount']) ? : $this->info['send_amount'] = 0;
+		isset($this->info['send_amount']) ? : $this->info['send_amount'] = '0.00000000';
 		isset($this->info['unknown_count']) ? : $this->info['unknown_count'] = 0;
-		isset($this->info['unknown_amount']) ? : $this->info['unknown_amount'] = 0;
+		isset($this->info['unknown_amount']) ? : $this->info['unknown_amount'] = '0.00000000';
+		isset($this->info['transactions_amount']) ? : $this->info['transactions_amount'] = '0.00000000';
 		
-		isset($this->info['transactions_amount']) ? : $this->info['transactions_amount'] = 0;
 		$this->info['transactions_amount'] += $item['amount'];
 		
 		switch( $item['category'] ) { 

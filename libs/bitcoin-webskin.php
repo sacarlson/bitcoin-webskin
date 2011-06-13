@@ -15,7 +15,7 @@ require_once 'config.php';
 
 class BitcoinWebskin {
 
-	public $debug = 0;		// Debug notices  1=on  0=off
+	public $debug = 1;		// Debug notices  1=on  0=off
 	
 	private $wallet_is_open; // Current status of wallet connection   true/false
 	
@@ -45,7 +45,7 @@ class BitcoinWebskin {
 			
 				if( !$this->open_wallet() ) {
 					$this->debug('ERROR: listtransactions: open_wallet failed');
-					return 'transactions';
+					return 'listtransactions';
 				} 
 				
 				
@@ -485,6 +485,8 @@ class BitcoinWebskin {
 	
 		if( isset($item['amount']) ) {
 			$item['amount'] = $this->num($item['amount']);
+		} else {
+			$item['amount'] = $this->num(0);
 		}
 		
 		if( isset($item['txid']) ) {
@@ -495,69 +497,71 @@ class BitcoinWebskin {
 			$item['account'] = '""'; 
 		}
 		
-		if( isset($item['confirmations']) && $item['confirmations'] >= 6 ) { 
-			$item['status'] = 'Confirmed /' . $item['confirmations'];
-		} else { 
-			$item['status'] = 'unconfirmed /' . $item['confirmations'];
+		if( !isset($item['confirmations'])  ) { 
+			$item['confirmations'] = 0;
 		}
-		if( $item['category'] == 'move'
-			|| $item['category'] == 'immature'
-			|| $item['category'] == 'orphan'
+		
+		if(    ( $item['category'] != 'immature' && $item['confirmations'] >= 6 )
+			|| ( $item['category'] == 'immature' && $item['confirmations'] >= 120 )
 			|| $item['category'] == 'generate'
+		) { 
+			$item['status'] = $item['confirmations'] . ' confirmations';
+		} else { 
+			$item['status'] = $item['confirmations'] . '/unconfirmed';
+		}
+		
+
+		if(    $item['category'] == 'move'
+			|| $item['category'] == 'orphan'
 		) { 
 			$item['status'] = $item['confirmations'];
 		}  
 		
-					
-		isset($this->info['immature_count']) ? : $this->info['immature_count'] = 0;
-		isset($this->info['immature_amount']) ? : $this->info['immature_amount'] = '0.00000000';
-		isset($this->info['generate_count']) ? : $this->info['generate_count'] = 0;
-		isset($this->info['generate_amount']) ? : $this->info['generate_amount'] = '0.00000000';
-		isset($this->info['orphan_count']) ? : $this->info['orphan_count'] = 0;
-		isset($this->info['orphan_amount']) ? : $this->info['orphan_amount'] = '0.00000000';
-		isset($this->info['move_count']) ? : $this->info['move_count'] = 0;
-		isset($this->info['move_amount']) ? : $this->info['move_amount'] = '0.00000000';
-		isset($this->info['receive_count']) ? : $this->info['receive_count'] = 0;
-		isset($this->info['receive_amount']) ? : $this->info['receive_amount'] = '0.00000000';
-		isset($this->info['send_count']) ? : $this->info['send_count'] = 0;
-		isset($this->info['send_amount']) ? : $this->info['send_amount'] = '0.00000000';
-		isset($this->info['unknown_count']) ? : $this->info['unknown_count'] = 0;
-		isset($this->info['unknown_amount']) ? : $this->info['unknown_amount'] = '0.00000000';
-		isset($this->info['transactions_amount']) ? : $this->info['transactions_amount'] = '0.00000000';
 		
-		$this->info['transactions_amount'] += $item['amount'];
+		@$this->info['transactions_amount'] += $item['amount'];
 		
 		switch( $item['category'] ) { 
 			case 'immature':  
-				$this->info['immature_count']++;
-				$this->info['immature_amount'] += $item['amount'];
+				@$this->info['immature_count']++;
+				@$this->info['immature_amount'] += $item['amount'];
 				break;
 			case 'generate':
-				$this->info['generate_count']++;
-				$this->info['generate_amount'] += $item['amount'];
+				@$this->info['generate_count']++;
+				@$this->info['generate_amount'] += $item['amount'];
 				break;			
 			case 'orphan':
-				$this->info['orphan_count']++;
-				$this->info['orphan_amount'] += $item['amount'];
+				@$this->info['orphan_count']++;
+				@$this->info['orphan_amount'] += $item['amount'];
 				break;				
 			case 'move':
-				$this->info['move_count']++;
-				$this->info['move_amount'] += $item['amount'];
+				@$this->info['move_count']++;
+				@$this->info['move_amount'] += $item['amount'];
 				break;				
 			case 'receive':
-				$this->info['receive_count']++;
-				$this->info['receive_amount'] += $item['amount'];
+				@$this->info['receive_count']++;
+				@$this->info['receive_amount'] += $item['amount'];
 				break;				
 			case 'send':
-				$this->info['send_count']++;
-				$this->info['send_amount'] += $item['amount'];
+				@$this->info['send_count']++;
+				@$this->info['send_amount'] += $item['amount'];
 				break;				
 			default:
-				$this->info['unknown_count']++;
-				$this->info['unknown_amount'] += $item['amount'];
+				@$this->info['unknown_count']++;
+				@$this->info['unknown_amount'] += $item['amount'];
 				break;				
-			
 		}
+		
+		
+		
+
+		@$this->info['transactions_amount'] = $this->num($this->info['transactions_amount']);
+		@$this->info['immature_amount'] = $this->num($this->info['immature_amount']);
+		@$this->info['generate_amount'] = $this->num($this->info['generate_amount']);
+		@$this->info['orphan_amount'] = $this->num($this->info['orphan_amount']);
+		@$this->info['move_amount'] = $this->num($this->info['move_amount']);
+		@$this->info['receive_amount'] = $this->num($this->info['receive_amount']);
+		@$this->info['send_amount'] = $this->num($this->info['send_amount']);
+		@$this->info['unknown_amount'] = $this->num($this->info['unknown_amount']);
 		
 	} // end post_process_listtransaction
 		

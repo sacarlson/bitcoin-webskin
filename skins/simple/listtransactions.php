@@ -21,7 +21,7 @@
  <tr>
   <td>Category</td>
   <td>Amount</td>
-  <td>Confirmations</td>
+  <td>Status</td>
   <td><a href="?a=listaccounts">Account</a></td>  
   <td>Time</td>
   <td><a href="?a=listreceivedbyaddress">Address</a></td>
@@ -63,42 +63,42 @@
  <tr>
   <td>All</td>
   <td><?php print(@$this->info['transactions_count']); ?> </td>
-  <td><?php print(@$this->info['transactions_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['transactions_amount']); ?> </td>
  </tr>
  <tr>
   <td>Receive</td>
   <td><?php print(@$this->info['receive_count']); ?> </td>
-  <td><?php print(@$this->info['receive_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['receive_amount']); ?> </td>
  </tr>
  <tr>
   <td>Send</td>
   <td><?php print(@$this->info['send_count']); ?> </td>
-  <td><?php print(@$this->info['send_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['send_amount']); ?> </td>
  </tr> 
  <tr>
   <td>Move</td>
   <td><?php print(@$this->info['move_count']); ?> </td>
-  <td><?php print(@$this->info['move_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['move_amount']); ?> </td>
  </tr> 
  <tr>
   <td>Orphan</td>
   <td><?php print(@$this->info['orphan_count']); ?> </td>
-  <td><?php print(@$this->info['orphan_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['orphan_amount']); ?> </td>
  </tr>
  <tr>
   <td>Immature</td>
   <td><?php print(@$this->info['immature_count']); ?> </td>
-  <td><?php print(@$this->info['immature_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['immature_amount']); ?> </td>
  </tr>
  <tr>
   <td>Generate</td>
   <td><?php print(@$this->info['generate_count']); ?> </td>
-  <td><?php print(@$this->info['generate_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['generate_amount']); ?> </td>
  </tr> 
  <tr>
   <td>Unknown</td>
   <td><?php print(@$this->info['unknown_count']); ?> </td>
-  <td><?php print(@$this->info['unknown_amount']); ?> </td>
+  <td class="amount"><?php print(@$this->info['unknown_amount']); ?> </td>
  </tr>  
 </td></tr></table>
 

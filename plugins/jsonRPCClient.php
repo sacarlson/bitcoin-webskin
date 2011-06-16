@@ -497,8 +497,9 @@ class jsonRPCClient {
 							));
 		$context  = stream_context_create($opts);
 		
+
 		// made @fopen silent errors ... 
-		if ($fp = @fopen($this->url, 'r', false, $context)) {
+		if ( $fp = @fopen($this->url, 'r', false, $context) ) {
 			$response = '';
 			while($row = fgets($fp)) {
 				$response.= trim($row)."\n";
@@ -508,7 +509,9 @@ class jsonRPCClient {
 			
 			$response = json_decode($response,true);
 		} else {
-			throw new Exception('Unable to connect to '.$this->url);
+			//throw new Exception('Unable to connect to '.$this->url);
+			$this->debug('Error: unable to connect to wallet');
+			throw new Exception("Unable to connect to wallet.");
 		}
 		
 

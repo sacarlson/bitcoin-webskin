@@ -60,8 +60,7 @@ class BitcoinWebskin {
 				$this->account = $this->get_get('account', '');
 				$this->count = $this->get_get('count', -1);
 				
-				$this->debug("Calling: listtransactions( " .$this->account . ", " . $this->count . ")");
-					
+
 				$this->listtransactions = $this->wallet->listtransactions(
 					(string) $this->account,
 					(int)    $this->count					
@@ -69,9 +68,9 @@ class BitcoinWebskin {
 				
 				$this->info['transactions_count'] = sizeof( $this->listtransactions );
 				
-				$this->listtransactions = array_reverse( $this->listtransactions );
+				$this->listtransactions = @array_reverse( $this->listtransactions );
 
-				$this->lisstransactions = array_walk( 
+				$this->lisstransactions = @array_walk( 
 					$this->listtransactions, 
 					array( &$this, 'post_process_listtransactions') 
 				);
@@ -588,6 +587,7 @@ class BitcoinWebskin {
 	public function debug($msg) {
 		if( !$this->debug ) { return; }
 		print "<pre style='margin:0'>DEBUG: "; print_r($msg); print '</pre>';
+		//print "<span style='margin:0'><br />DEBUG: "; print_r($msg); print '</span>';	
 	}
 
 } // end class BitcoinWebskin

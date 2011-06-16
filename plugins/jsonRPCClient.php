@@ -533,6 +533,7 @@ class jsonRPCClient {
 	public function debug($msg) {
 		if( !$this->debug ) { return; }
 		print "<pre style='margin:0'>DEBUG: "; print_r($msg); print '</pre>';
+		//print "<span style='margin:0'><br />DEBUG: "; print_r($msg); print '</span>';
 	}	
 	
 }

@@ -7,9 +7,11 @@
 class jsonRPCClientControler implements Bitcoin, Namecoin {
 
 	// Control
-	public function start() {  
+	public function start($debug=false) {  
 		try { 
-			$this->tube = new jsonRPCClient( SCHEME . '://' . USERNAME . ':' . PASSWORD . '@' . HOST . ':' . PORT . '/');
+			$this->tube = new jsonRPCClient( 
+				SCHEME . '://' . USERNAME . ':' . PASSWORD . '@' . HOST . ':' . PORT . '/', $debug
+			);
 			$this->info = $this->tube->getinfo();  
 			return true;
 		} catch( Exception $e ) {
@@ -426,7 +428,7 @@ class jsonRPCClient {
 		// proxy
 		empty($proxy) ? $this->proxy = '' : $this->proxy = $proxy;
 		// debug state
-		//empty($debug) ? $this->debug = false : $this->debug = true;
+		empty($debug) ? $this->debug = false : $this->debug = true;
 		// message id
 		$this->id = 1;
 	}
@@ -451,6 +453,9 @@ class jsonRPCClient {
 	 * @return array
 	 */
 	public function __call($method,$params) {
+		
+		//$this->debug("Call: $method ");
+		//if( $params ) { $this->debug($params); }
 		
 		// check
 		if (!is_scalar($method)) {
@@ -479,10 +484,10 @@ class jsonRPCClient {
 						'id' => $currentId
 						);
 						
-		//print "<pre>jsonRPC: request=";print_r($request); print '</pre>';
 		
 		$request = json_encode($request);
-		//$this->debug && $this->debug.='***** Request *****'."\n".$request."\n".'***** End Of request *****'."\n\n";
+
+		$this->debug("&gt; $request");
 		
 		// performs the HTTP POST
 		$opts = array ('http' => array (
@@ -498,21 +503,15 @@ class jsonRPCClient {
 			while($row = fgets($fp)) {
 				$response.= trim($row)."\n";
 			}
-			//$this->debug && $this->debug.='***** Server response *****'."\n".$response.'***** End of server response *****'."\n";
+			
+			$this->debug("&lt $response");
+			
 			$response = json_decode($response,true);
 		} else {
 			throw new Exception('Unable to connect to '.$this->url);
 		}
 		
-		
-		// debug output
-		//if ($this->debug) {
-			//echo nl2br($this->debug);
-			//print "<p>jsonRPC: debug = " . nl2br($this->debug) . '</p>';
-		//}
-		
-		
-		
+
 		
 		// final checks and return
 		if (!$this->notification) {
@@ -530,4 +529,10 @@ class jsonRPCClient {
 			return true;
 		}
 	}
+
+	public function debug($msg) {
+		if( !$this->debug ) { return; }
+		print "<pre style='margin:0'>DEBUG: "; print_r($msg); print '</pre>';
+	}	
+	
 }

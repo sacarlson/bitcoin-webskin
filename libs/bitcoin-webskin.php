@@ -15,7 +15,7 @@ require_once 'config.php';
 
 class BitcoinWebskin {
 
-	public $debug = 0;		// Debug notices  1=on  0=off
+	public $debug = 1;		// Debug notices  1=on  0=off
 	
 	private $wallet_is_open; // Current status of wallet connection   true/false
 	
@@ -55,7 +55,6 @@ class BitcoinWebskin {
 				if( isset($_GET['account']) && $_GET['account'] == '""' ) {
 					$_GET['account'] = ''; // Default Account
 				}
-				
 				
 				
 				$this->account = $this->get_get('account', '');
@@ -430,7 +429,7 @@ class BitcoinWebskin {
 
 	private function open_wallet() {  // Open the wallet
 	
-		$this->debug("open_wallet() called.  wallet_is_open = " . ($this->wallet_is_open ? 'true' : 'false') );		
+		//$this->debug("open_wallet() called.  wallet_is_open = " . ($this->wallet_is_open ? 'true' : 'false') );		
 
 		if( $this->wallet_is_open ) { return true; }
 		
@@ -438,9 +437,9 @@ class BitcoinWebskin {
 		include_once('plugins/jsonRPCClient.php');
 		$this->wallet = new jsonRPCClientControler;
 		
-		$this->debug("Interface created.  Starting wallet... ");			
+		//$this->debug("Interface created.  Starting wallet... ");			
 		
-		if( !$this->wallet->start() ) {
+		if( !$this->wallet->start($this->debug) ) {
 			$this->debug("ERROR: unable to open wallet: " . @$this->wallet->info['error']);
 			$this->wallet_is_open = false;
 			return false;
@@ -451,9 +450,9 @@ class BitcoinWebskin {
 		
 		$this->info['keypoololdest_date'] = $this->readable_time( $this->info['keypoololdest'] );
 		
-		$this->debug('Wallet Open. Balance: '.$this->info['balance']
-			.'  Blocks: '.$this->info['blocks'].'  Connections: '.$this->info['connections']
-			.'  Version: '.$this->info['version'].'  Paytxfee: '.$this->info['paytxfee']);	
+		//$this->debug('Wallet Open. Balance: '.$this->info['balance']
+		//	.'  Blocks: '.$this->info['blocks'].'  Connections: '.$this->info['connections']
+		//	.'  Version: '.$this->info['version'].'  Paytxfee: '.$this->info['paytxfee']);	
 		
 		return true;
 	} // end open_wallet
@@ -465,7 +464,7 @@ class BitcoinWebskin {
 			include 'skins/simple/fatal.error.php'; 
 			exit; 
 		}
-		$this->debug("template($t) loading");		
+		//$this->debug("template($t) loading");		
 		try {
 			include($file);	
 		} catch( Exception $e ) {

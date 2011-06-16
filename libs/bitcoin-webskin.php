@@ -15,7 +15,7 @@ require_once 'config.php';
 
 class BitcoinWebskin {
 
-	public $debug = 1;		// Debug notices  1=on  0=off
+	public $debug = 0;		// Debug notices  1=on  0=off
 	
 	private $wallet_is_open; // Current status of wallet connection   true/false
 	
@@ -435,18 +435,13 @@ class BitcoinWebskin {
 		if( $this->wallet_is_open ) { return true; }
 		
 		include_once('libs/bitcoin-interface.php');
-
-		
-		
-		$this->debug("Starting Interface: bitcoin-php");
-		
-		include_once('plugins/bitcoin-php.php');
-		$this->wallet = new BitcoinPHPcontroler;
+		include_once('plugins/jsonRPCClient.php');
+		$this->wallet = new jsonRPCClientControler;
 		
 		$this->debug("Interface created.  Starting wallet... ");			
 		
 		if( !$this->wallet->start() ) {
-			$this->debug("ERROR: unable to open wallet: " . @$this->info['error']);
+			$this->debug("ERROR: unable to open wallet: " . @$this->wallet->info['error']);
 			$this->wallet_is_open = false;
 			return false;
 		}

@@ -490,11 +490,13 @@ class jsonRPCClient {
 		$this->debug("&gt; $request");
 		
 		// performs the HTTP POST
-		$opts = array ('http' => array (
-							'method'  => 'POST',
-							'header'  => 'Content-type: application/json',
-							'content' => $request
-							));
+		$opts = array ( 'http' => array (
+			'method'  => 'POST',
+			'header'  => 'Content-type: application/json',
+			'timeout'  => 5,
+			'ignore_errors' => 1,
+			'content' => $request )
+		);
 		$context  = stream_context_create($opts);
 		
 
@@ -509,7 +511,7 @@ class jsonRPCClient {
 			
 			$response = json_decode($response,true);
 		} else {
-			//throw new Exception('Unable to connect to '.$this->url);
+
 			$this->debug('Error: unable to connect to wallet');
 			throw new Exception("Unable to connect to wallet.");
 		}
@@ -523,7 +525,8 @@ class jsonRPCClient {
 				throw new Exception('Incorrect response id (request id: '.$currentId.', response id: '.$response['id'].')');
 			}
 			if (!is_null($response['error'])) {
-				throw new Exception('Request error: '.$response['error']);
+                               $this->debug('Error ' . $response['error']['code'] . ' : ' . $response['error']['message'] );
+                                $response['result'] = $response['error'];
 			}
 			
 			return $response['result'];

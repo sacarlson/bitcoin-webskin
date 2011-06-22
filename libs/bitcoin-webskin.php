@@ -286,16 +286,46 @@ class BitcoinWebskin {
 				}				
 				return 'backupwallet'; break;
 				
+				
+				
+				
 			case 'setgenerate':
-				$this->open_wallet(); 			
-				$this->setgenerate = $this->wallet->setgenerate(
-					(bool) $this->get_get('generate', '', true),				
-					(int)  $this->get_get('genproclimit', -1)				
-				); 
-				if( $this->setgenerate == '' ) {
-					$this->setgenerate = 'OK';
+			
+				$this->open_wallet(); 		
+				
+				// hacky fix until we do better per-_GET/_POST to $this->{_GET/_POST} var with typecasting
+				switch( $this->get_get('generate', '', TRUE) ) {
+					case 'false':
+					case '0':
+						$this->generate = 0;
+						break;
+					case 'true':
+					case '1':
+						$this->generate = 1;
+						break;
+					default:
+						$this->debug("ERROR: setgenerate generate is not boolean");
+						return 'setgenerate'; 
+						break;
+				
 				}
+
+				$this->genproclimit = (int) $this->get_get('genproclimit', '');
+				
+				$this->setgenerate = $this->wallet->setgenerate( 
+					(bool)$this->generate, (int)$this->genproclimit 
+				); 
+
+				if( $this->setgenerate == '' ) {
+					$this->setgenerate = "OK: setgenerate $this->generate $this->genproclimit" ;
+				}
+				
+				
 				return 'setgenerate'; break;
+				
+				
+				
+				
 				
 			case 'help': 
 				$this->open_wallet(); 			
@@ -595,8 +625,7 @@ class BitcoinWebskin {
 			$msg = "$this->a requires '$get' parameter";
 			include 'skins/simple/fatal.error.php'; exit;
 		}
-		
-		//print "<pre style='margin:0'>_GET[$get] = $r</pre>";
+
 		return $r;
 	}
 	

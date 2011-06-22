@@ -28,7 +28,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 	}
 	
 	// Accounts
-    public function listaccounts( $minconf=1 ) { 
+	public function listaccounts( $minconf=1 ) { 
 		try { 
 			return $this->tube->listaccounts( (int)$minconf );
 		} catch( Exception $e ) {
@@ -44,7 +44,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}	
 	} // end listreceivedbyaccount
 	
-    public function getaccountaddress( $account ) { 
+	public function getaccountaddress( $account ) { 
 		try { 
 			return $this->tube->getaccountaddress( (string)$account );
 		} catch( Exception $e ) {
@@ -52,7 +52,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}	
 	}
 
-    public function getaddressesbyaccount( $account ) { 
+	public function getaddressesbyaccount( $account ) { 
 		try { 
 			return $this->tube->getaddressesbyaccount( (string)$account );
 		} catch( Exception $e ) {
@@ -60,7 +60,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-    public function getreceivedbyaccount( $account, $minconf=1 ) { 
+	public function getreceivedbyaccount( $account, $minconf=1 ) { 
 		try { 
 			return $this->tube->getreceivedbyaccount( (string)$account, (int)$minconf );
 		} catch( Exception $e ) {
@@ -68,7 +68,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-    public function getbalance( $account, $minconf=1 ) { 	
+	public function getbalance( $account, $minconf=1 ) { 	
 		try { 
 			return $this->tube->getbalance( (string)$account, (int)$minconf );
 		} catch( Exception $e ) {
@@ -77,7 +77,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 	}
 	
 	// Transactions
-    public function listtransactions( $account, $count=10 ) { 
+	public function listtransactions( $account, $count=10 ) { 
 		try { 
 			return $this->tube->listtransactions( (string)$account, (int)$count );
 		} catch( Exception $e ) {
@@ -291,7 +291,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 	}
 
 	// Namecoin
-    public function name_list( $name ) { 
+	public function name_list( $name ) { 
 		try { 
 			return $this->tube->name_list( (string)$name);
 		} catch( Exception $e ) {
@@ -299,7 +299,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}	
 	}
 
-    public function name_scan( $start_name='', $max_returned ) { 
+	public function name_scan( $start_name='', $max_returned ) { 
 		try { 
 			return $this->tube->name_scan( (string)$start_name, (int)$max_returned);
 		} catch( Exception $e ) {
@@ -307,7 +307,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-    public function name_new( $name ) { 
+	public function name_new( $name ) { 
 		try { 
 			return $this->tube->name_new( (string)$name);
 		} catch( Exception $e ) {
@@ -315,7 +315,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-    public function name_firstupdate( $name, $rand, $tx, $value ) {
+	public function name_firstupdate( $name, $rand, $tx, $value ) {
 		try { 
 			return $this->tube->name_firstupdate( 
 				(string)$name,
@@ -328,7 +328,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-    public function name_update( $name, $value, $toaddress='' ) { 
+	public function name_update( $name, $value, $toaddress='' ) { 
 		try { 
 			return $this->tube->name_update( (string)$name, (string)$value, (string)$toaddress);
 		} catch( Exception $e ) {
@@ -344,7 +344,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-    public function deletetransaction( $txid ) { 
+	public function deletetransaction( $txid ) { 
 		try { 
 			return $this->tube->deletetransaction( (string)$txid);
 		} catch( Exception $e ) {

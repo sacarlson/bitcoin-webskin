@@ -8,7 +8,7 @@ http://webskin.bitcoincommons.org/
 https://github.com/zamgo/bitcoin-webskin
 
 ---------------------------------------------------------------------
-Version 0.0.1 - Prototype release
+Version 0.0.2 - Prototype release
 
 This is an early release of Bitcoin Webskin.  
 
@@ -28,9 +28,9 @@ Quicky Install Instructions:
 - copy config.sample.php to config.php, 
   and fill in correct info for your system
 
-- setup bitcoind to allow access 
- (as per what you defined in config.php)
- 
+- setup bitcoind to allow access.  Sync your user/pass/host settings 
+  of bitcoin.conf file and bitcoin-webskin/config.php
+
 - run bitcoind
 
 - load the top level index.php file in your browser
@@ -42,13 +42,14 @@ Files:
 /config.php
 /license.txt 
 /readme.txt
-/libs/bitcoin-webskin.php
-/libs/bitcoin-interface.php
-/skins/simple/*.php	- the simple html skin
-/skins/debug/*.php	- the debug skin
-/plugins/test.php	- the debug interface
-/plugins/bitcoin-php.php   - bitcoin-php library interface
+/libs/bitcoin-webskin.php - the main controller
+/libs/bitcoin-interface.php - interface definition for bitcoind methods
+/plugins/jsonRPCClient.php - json RPC client with webskin interface
+/plugins/test.php - the debug interface
 /plugins/mtgox.php - plugin to mtgox json public api
+/skins/debug/*.php	- the debug skin
+/skins/simple/*.php	- the simple html skin
+
 
 ---------------------------------------------------------------------
 Making a new skin:
@@ -64,12 +65,10 @@ Making a new bitcoin interface:
 
 - create new php class in /plugins/ that implements the 
   Bitcoin interface (see /libs/bitcoin-interface.php)
-- edit /libs/bitcoin-webskin.php, open_wallet() function,
-- replace
-			include_once('plugins/bitcoin-php.php');
-			$this->wallet = new BitcoinPHPcontroler;
-  with an include of your new interface file, 
-  and set $this->wallet.
+- edit /libs/bitcoin-webskin.php, open_wallet() function, replace:
+		include_once('plugins/jsonRPCClient.php');
+		$this->wallet = new jsonRPCClientControler;
+  with an include of your new interface file, and set $this->wallet.
 
 
 ---------------------------------------------------------------------

@@ -206,7 +206,7 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
-        public function redeemescrow( $inputtx, $amount, $txhex='') { 
+        public function redeemescrow( $inputtx, $address, $txhex='') { 
  		try { 
 			return $this->tube->redeemescrow( 
 				(string)$inputtx,

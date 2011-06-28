@@ -147,7 +147,7 @@ Tests:
 <form action="./" method="GET"><input type="hidden" name="a" value="sendescrow">
 <input type="submit" value="sendescrow"> 
 	escrow address:<input type="text" name="escrowaddrs" value="" size="60">
-	amount:<input type="text" name="amount" value="" size="20">
+<br />	amount:<input type="text" name="amount" value="" size="20">
 <br />	comment:<input type="text" name="comment" value="" size="20">
 	comment_to:<input type="text" name="comment_to" value="" size="20">
 <br />  note: escrow address is of the form n,addr,addr...  

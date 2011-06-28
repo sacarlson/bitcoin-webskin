@@ -192,6 +192,31 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 			return 'move() Error: ' . $e->getMessage();
 		}
 	}
+
+        public function sendescrow( $escrowaddrs, $amount, $comment='', $comment_to='' ) { 
+ 		try { 
+			return $this->tube->sendescrow( 
+				(string)$escrowaddrs,
+				(float)$amount,
+				(string)$comment,							
+				(string)$comment_to
+			);			
+		} catch( Exception $e ) {
+			return 'sendescrow() Error: ' . $e->getMessage();
+		}
+	}
+
+        public function redeemescrow( $inputtx, $amount, $txhex='') { 
+ 		try { 
+			return $this->tube->redeemescrow( 
+				(string)$inputtx,
+				(string)$address,
+				(string)$txhex							
+			);			
+		} catch( Exception $e ) {
+			return 'redeemescrow() Error: ' . $e->getMessage();
+		}
+	}
 	
 	// Server
     public function getinfo() { 

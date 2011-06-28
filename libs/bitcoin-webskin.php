@@ -256,6 +256,15 @@ class BitcoinWebskin {
 				
 				return 'sendescrow'; break;
 	
+                        case 'redeemescrow':
+				$this->open_wallet(); 			
+				$this->redeemescrow = $this->wallet->redeemescrow(
+					(string) $this->get_get('inputtx', ''),					
+					(string) $this->get_get('address', ''),					
+					(string)  $this->get_get('txhex', '')													
+				); 
+				return 'redeemescrow'; break;
+
 			case 'sendfrom':
 				$this->open_wallet(); 			
 				$this->sendfrom = $this->wallet->sendfrom(

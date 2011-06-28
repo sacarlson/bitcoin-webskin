@@ -5,7 +5,7 @@
 */
 
 if( !file_exists('config.php') ) { 
-	$msg = "Can not find Starup file 'config.php'"; 
+	$msg = "Can not find Startup file 'config.php'"; 
 	include 'skins/simple/fatal.error.php'; 
 	exit; 
 }
@@ -217,6 +217,45 @@ class BitcoinWebskin {
 				
 				return 'sendtoaddress'; break;			
 			
+
+                                case 'sendescrow':
+			
+                                $this->open_wallet(); 			
+				
+                                $this->inputtx = $this->get_get('inputtx', '');
+                                $this->address = $this->get_get('address', '');
+                                $this->amount = $this->get_get('amount', '');
+                                $this->ok = $this->get_get('ok', '0');
+
+	
+                                $this->debug("inputtx:$this->inputtx send address:$this->address amount:$this->amount ok:$this->ok");
+
+				if( $this->address ) { 
+
+					$this->validateaddress = $this->wallet->validateaddress( $this->address );
+					if( !$this->validateaddress['isvalid'] ) { 
+						$this->debug('invalid address: ' . $this->address);
+						return 'sendescrow'; break;	
+						
+					}
+					
+				} 
+				
+				if( $this->address && $this->amount && $this->ok ) { 
+
+					$this->debug("Sending escrow");
+					
+					$this->sendescrow = $this->wallet->sendescrow(
+                                                (string) $this->inputtx,
+						(string) $this->address,					
+						(float)  $this->amount,				
+						(string) $this->get_get('comment', ''),					
+						(string) $this->get_get('comment_to', '')					
+					); 
+				}
+				
+				return 'sendescrow'; break;
+	
 			case 'sendfrom':
 				$this->open_wallet(); 			
 				$this->sendfrom = $this->wallet->sendfrom(

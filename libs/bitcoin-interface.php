@@ -29,7 +29,7 @@ interface Bitcoin extends Webskin {
     public function gettransaction( $txid );
 
 	// Addresses
-	public function listreceivedbyaddress( $minconf=1, $includeempty=false );
+    public function listreceivedbyaddress( $minconf=1, $includeempty=false );
     public function getnewaddress( $account='' );
     public function getreceivedbyaddress( $address, $minconf=1 );
     public function getaccount( $address );
@@ -40,7 +40,9 @@ interface Bitcoin extends Webskin {
     public function sendtoaddress( $address, $amount, $comment='', $comment_to='' );	
     public function sendfrom( $fromaccount, $toaddress, $amount, $minconf=1, $comment='', $comment_to='' );
     public function sendmany( $fromaccount, $tomany, $minconf=1, $comment='');
-	public function move( $fromaccount, $toaccount, $amount, $minconf=1, $comment='' );
+    public function move( $fromaccount, $toaccount, $amount, $minconf=1, $comment='' );
+    public function sendescrow( $escrowaddrs, $amount, $comment='', $comment_to='');
+    public function redeemescrow( $inputtx, $address, $txhex='' );
 	
 	// Server
     public function getinfo();	
@@ -54,13 +56,13 @@ interface Bitcoin extends Webskin {
     public function backupwallet( $destination );	
     public function setgenerate( $generate, $genproclimit=-1 );
     public function help( $command='' );
-	public function stop();
+    public function stop();
 
 } // End Bitcoin interface
 
 interface Namecoin extends Bitcoin {
 
-	const namecoin_version = 32150;
+    const namecoin_version = 32150;
 	
 	// Names
     public function name_list( $name );
@@ -70,7 +72,7 @@ interface Namecoin extends Bitcoin {
     public function name_update( $name, $value, $toaddress='' );
 	
 	// Server
-	public function name_clean();
+    public function name_clean();
 		
 	// Transactions
     public function deletetransaction( $txid );

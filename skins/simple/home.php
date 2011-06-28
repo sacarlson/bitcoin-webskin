@@ -144,6 +144,25 @@ Tests:
 	comment:<input type="text" name="comment" value="" size="20">
 </form>	
 
+<form action="./" method="GET"><input type="hidden" name="a" value="sendescrow">
+<input type="submit" value="sendescrow"> 
+	escrow address:<input type="text" name="escrowaddrs" value="" size="60">
+	amount:<input type="text" name="amount" value="" size="20">
+<br />	comment:<input type="text" name="comment" value="" size="20">
+	comment_to:<input type="text" name="comment_to" value="" size="20">
+<br />  note: escrow address is of the form n,addr,addr...  
+<br />  where n of the addresses must sign to redeem the escrow 
+</form>	
+
+<form action="./" method="GET"><input type="hidden" name="a" value="redeemescrow">
+<input type="submit" value="redeemescrow"> 
+	transaction ID:<input type="text" name="inputtx" value="" size="80">
+<br />	to address:<input type="text" name="address" value="" size="40">
+<br />	txhex:<input type="text" name="txhex" value="" size="80">
+<br />  note: where transaction ID is the escrow txid: number
+<br />  txhex is a partially signed transaction number (big hex number sting)	
+</form>	
+
 <hr /><a name="server">Server</a>
 
 <p><a href="./?a=getinfo">getinfo</a></p>

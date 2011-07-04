@@ -206,6 +206,19 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 		}
 	}
 
+        public function sendmultisign( $multiaddrs, $amount, $comment='', $comment_to='' ) { 
+ 		try { 
+			return $this->tube->sendmultisign( 
+				(string)$multiaddrs,
+				(float)$amount,
+				(string)$comment,							
+				(string)$comment_to
+			);			
+		} catch( Exception $e ) {
+			return 'sendmultisign() Error: ' . $e->getMessage();
+		}
+	}
+
         public function redeemescrow( $inputtx, $address, $txhex='') { 
  		try { 
 			return $this->tube->redeemescrow( 
@@ -215,6 +228,19 @@ class jsonRPCClientControler implements Bitcoin, Namecoin {
 			);			
 		} catch( Exception $e ) {
 			return 'redeemescrow() Error: ' . $e->getMessage();
+		}
+	}
+     
+        public function redeemmultisign( $inputtx, $address, $amount, $txhex='') { 
+ 		try { 
+			return $this->tube->redeemmultisign( 
+				(string)$inputtx,
+				(string)$address,
+                                (float)$amount,
+				(string)$txhex							
+			);			
+		} catch( Exception $e ) {
+			return 'redeemmultsign() Error: ' . $e->getMessage();
 		}
 	}
 	

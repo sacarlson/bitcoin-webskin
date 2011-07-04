@@ -242,17 +242,52 @@ class BitcoinWebskin {
 						(string) $this->get_get('comment_to', '')					
 					); 
 				}
-				
 				return 'sendescrow'; break;
+
+                           case 'sendmultisign':
+			
+                                $this->open_wallet(); 			
+				
+                                $this->multiaddrs = $this->get_get('multiaddrs', '');                   
+                                $this->amount = $this->get_get('amount', '');
+                                $this->ok = $this->get_get('ok', '0');
+
+	
+                                $this->debug("multiaddrs:$this->multiaddrs amount:$this->amount ok:$this->ok");
+
+				
+				
+				if( $this->multiwaddrs && $this->amount && $this->ok ) { 
+
+					$this->debug("Sending MultiSign");
+					
+					$this->sendescrow = $this->wallet->sendescrow(
+                                                (string) $this->multiaddrs,											
+						(float)  $this->amount,				
+						(string) $this->get_get('comment', ''),					
+						(string) $this->get_get('comment_to', '')					
+					); 
+				}
+				return 'sendmultisign'; break;
 	
                         case 'redeemescrow':
 				$this->open_wallet(); 			
 				$this->redeemescrow = $this->wallet->redeemescrow(
 					(string) $this->get_get('inputtx', ''),					
-					(string) $this->get_get('address', ''),					
+					(string) $this->get_get('address', ''),                                      				
 					(string)  $this->get_get('txhex', '')													
 				); 
 				return 'redeemescrow'; break;
+
+                        case 'redeemmultsign':
+				$this->open_wallet(); 			
+				$this->redeemmultisign = $this->wallet->redeemmultisign(
+					(string) $this->get_get('inputtx', ''),					
+					(string) $this->get_get('address', ''),	
+                                        (float)  $this->get_get('amount', ''),				
+					(string) $this->get_get('txhex', '')													
+				); 
+				return 'redeemmultisign'; break;
 
 			case 'sendfrom':
 				$this->open_wallet(); 			

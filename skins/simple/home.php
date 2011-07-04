@@ -154,6 +154,16 @@ Tests:
 <br />  where n of the addresses must sign to redeem the escrow 
 </form>	
 
+<form action="./" method="GET"><input type="hidden" name="a" value="sendmultisign">
+<input type="submit" value="sendmultisign"> 
+	MultiSign address:<input type="text" name="multiaddrs" value="" size="60">
+<br />	Amount:<input type="text" name="amount" value="" size="20">
+<br />	comment:<input type="text" name="comment" value="" size="20">
+	comment_to:<input type="text" name="comment_to" value="" size="20">
+<br />  note: MultiSign address is of the form n,addr,addr,addr...  from 1 - 16 addresses max
+<br />  where n of the addresses must sign to redeem the MultiSign transaction 
+</form>
+
 <form action="./" method="GET"><input type="hidden" name="a" value="redeemescrow">
 <input type="submit" value="redeemescrow"> 
 	transaction ID:<input type="text" name="inputtx" value="" size="80">
@@ -162,6 +172,18 @@ Tests:
 <br />  note: where transaction ID is the escrow txid: number
 <br />  txhex is a partially signed transaction number (big hex number sting)	
 </form>	
+
+<form action="./" method="GET"><input type="hidden" name="a" value="redeemmulisign">
+<input type="submit" value="redeemmultisign"> 
+	Transaction ID:<input type="text" name="inputtx" value="" size="80">
+<br />	To Address:<input type="text" name="address" value="" size="40">
+<br />  Amount:<input type="text" name="amount" value="" size="20">
+<br />	Txhex:<input type="text" name="txhex" value="" size="80">
+<br />  note: Transaction ID is the MultiSign txid: number to sign or transact
+<br />  Address: is the address where the signer wants the transaction to go
+<br />  Amount: is the amount this signer wants this address to recieve out of this transaction
+<br />  txhex: is a partially signed transaction number (big hex number sting)	
+</form>
 
 <hr /><a name="server">Server</a>
 
